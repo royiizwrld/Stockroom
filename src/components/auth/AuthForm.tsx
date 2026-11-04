@@ -32,19 +32,19 @@ export function AuthForm({ mode, redirect }: { mode: "login" | "signup"; redirec
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!email.includes("@")) return toast.error("Enter a valid email address.");
-    if (password.length < 8) return toast.error("Password must be at least 8 characters.");
+    if (!email.includes("@")) { toast.error("Enter a valid email address."); return; }
+    if (password.length < 8) { toast.error("Password must be at least 8 characters."); return; }
     setBusy(true);
     try {
       if (mode === "login") {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) return toast.error(error.message === "Invalid login credentials" ? "Wrong email or password." : error.message);
+        if (error) { toast.error(error.message === "Invalid login credentials" ? "Wrong email or password." : error.message); return; }
       } else {
         const { data, error } = await supabase.auth.signUp({
           email, password,
           options: { emailRedirectTo: `${window.location.origin}${target}`, data: { display_name: name.trim() || undefined } },
         });
-        if (error) return toast.error(error.message);
+        if (error) { toast.error(error.message); return; }
         if (!data.session) setSent(true);
       }
     } finally {

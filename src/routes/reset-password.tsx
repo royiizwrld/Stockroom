@@ -27,11 +27,11 @@ function Reset() {
   const [busy, setBusy] = useState(false);
   const submit = async (e: FormEvent) => {
     e.preventDefault();
-    if (password.length < 8) return toast.error("Password must be at least 8 characters.");
+    if (password.length < 8) { toast.error("Password must be at least 8 characters."); return; }
     setBusy(true);
     const { error } = await supabase.auth.updateUser({ password });
     setBusy(false);
-    if (error) return toast.error("This reset link has expired. Request a new one.");
+    if (error) { toast.error("This reset link has expired. Request a new one."); return; }
     toast.success("Password updated.");
     await navigate({ to: "/dashboard", replace: true });
   };
