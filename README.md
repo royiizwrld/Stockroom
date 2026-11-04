@@ -1,82 +1,54 @@
-# Inventory Buddy
+📦Stockroom
+Stockroom is a modern, feature-rich inventory and asset tracking web application built for shops, offices, and personal use. It helps you keep track of what you have, where items are located, and when it’s time to reorder—complete with AI-powered assistance, multi-currency support, smart supplier purchase orders, and team collaboration features.
 
-Develop a responsive Mini Inventory & Asset Logger web app with a clean, professional dashboard design (card layout, light/dark mode, works well on mobile and desktop).
+Key Features
+Dashboard & Inventory Management
+Real-Time Overview: Track total items, total units, overall inventory valuation, and low/out-of-stock counts at a glance.
 
-DASHBOARD
+Advanced Search & Filtering: Quickly locate items by name, SKU, category, status, or location.
 
-- Summary cards: Total Items (count of distinct items), Total Units in stock, Total Inventory Value (sum of quantity x unit price), and number of Low Stock / Out of Stock items.
+Barcode & QR Code Support: Assign and scan barcodes or asset tags directly via your device camera.
 
-- A "Low Stock Alerts" panel listing items at or below their reorder level, with the quantity and a quick Restock button.
+Stock Movement History: Complete audit trail logging every restock, sale, loss, or adjustment with timestamps and reasons.
 
-- A chart of inventory value by category.
+AI-Powered Assistant & Bulk Entry
+Smart AI Assistant: Ask natural language questions like "What should I reorder this week?" or "What items are tying up the most money?"
 
-ITEMS TABLE
+Smart Restock Commands: Type commands like "Restock 50 USB-C hubs at $20" to automatically parse and pre-fill items, quantities, and costs.
 
-- Searchable table with real-time filtering: search by name, SKU or location; filter by category and by status (In Stock, Low Stock, Out of Stock). Sortable columns. Show a "no results" state and a clear-filters button.
+Smart Bulk Import: Paste messy text lists, upload CSVs, or scan photos of physical invoices/shelf lists to add items in bulk with a preview review step.
 
-- Status is calculated automatically: Out of Stock when quantity is 0, Low Stock when quantity is at or below the item's reorder level, otherwise In Stock. Show color-coded status badges.
+Live Multi-Currency Conversion
+Global Currency Support: Set your primary store currency and record purchases made in foreign currencies.
 
-CRUD
+Live Exchange Rates: Automatically fetches daily exchange rates to convert foreign spending into your base currency instantly.
 
-- Add, edit and delete items in a modal or side form with fields: name, SKU (must be unique, validate it), category, quantity, unit price, location, reorder level (default 5), notes, and an optional item type (Inventory item / Fixed asset).
+Supplier Orders & PDF Invoices
+Dedicated Reorder & PO Page (/reorder): Pre-loads low-stock items or lets you manually add any stock item to a purchase order.
 
-- Delete with a confirmation dialog. Validate inputs (no negative quantities or prices) and show toast confirmations.
+Supplier Management: Fill in supplier details, delivery dates, payment terms, and auto-incrementing PO numbers.
 
-- Default categories (e.g. Electronics, Office Supplies, Furniture, Tools, Other), and let users add custom categories and locations.
+Professional PDF Export: Generate and download clean, professional Purchase Order / Invoice PDFs.
 
-DATA
+One-Click Email Dispatch: Instantly open your email client pre-formatted with order details, alongside a quick "Mark order as received" action to automatically log shipments into stock.
 
-- Persist everything in localStorage (items, categories, locations).
+Teams & Workspaces
+Shared Workspaces: Multi-user environments for shops and offices so everyone works from the same live inventory list.
 
-- Seed with a small set of sample items on first load, with a "Clear sample data" button.
+Granular Role-Based Permissions: Assign roles including Owner, Admin, Manager, Staff, and Viewer (with options to restrict sensitive cost/price visibility for staff).
 
-Organize the code with separate components, shared types, and one data context/hook for storage and the status logic.                                                                                                                                                                                                                                                                                               Add a quick "Restock" button next to low-stock and out-of-stock items in both the table and the alerts panel. A single click increments quantity by 1, and a small dropdown beside it lets the user restock by a custom amount (e.g. +5, +10, or any number). Show a toast with an undo option.
+Activity Audit Logs: Track who changed what and when across the workspace.
 
-Add barcode and QR code placeholder fields on each item: a "Barcode" text field and a "QR code / asset tag" text field, both optional, shown on the item detail view and searchable from the main search box. Show a placeholder box on the item detail page labeled "Barcode / QR preview" that renders the barcode value as a generated barcode image or QR code when a value is entered. Make sure the structure can support real camera scanning later.                                                                                                                                                                                                                                                                                                                Add a stock movement history. Every change to quantity (manual edit, restock, stock removal, bulk import) is recorded with the date, item, amount changed, resulting quantity, and an optional reason (Purchase, Sale, Damaged, Lost, Correction, Other). Add a "Remove stock" action next to Restock, and an item detail page with its movement history and a small quantity-over-time chart.
+Tech Stack
+Frontend: React, TypeScript, Vite, Tailwind CSS, Radix UI / Shadcn UI components.
 
-Add an Export CSV button that downloads the currently filtered items, and a CSV import with a preview step that validates rows and flags duplicate SKUs before saving.                                                                                                                                                                                                  Add a "Smart Bulk Entry" feature. The user can paste messy text or upload a CSV, a PDF, or a photo of an invoice, delivery note or shelf list, for example:
+Routing & State: React Router, Local Storage / Cloud Sync architecture.
 
-"20 A4 paper reams @ 650 shelf B2, 5 office chairs 8500 each store room, HDMI cables x30 - 400, laptop Dell Latitude asset tag LT-014 45000"
+Document Generation: Client-side PDF generation utilities.
 
-Send it to the AI through an edge function and have it return structured JSON: a list of items with name, quantity, unit price, category (mapped to existing categories where possible), location, SKU if present, and item type. Show an editable preview table where each row can be corrected or deleted. Highlight low-confidence rows, and match likely existing items by name or SKU so the user can choose to "Add as new" or "Add quantity to existing item". Nothing is saved until the user clicks "Confirm & Save". Handle invalid AI output with a friendly error.                                                                                                                                                                                                                                                                                                        Add an AI inventory assistant as a floating chat button that opens a side panel on every page.
+Exchange Rates: Live currency conversion engine with daily caching.
 
-BEHAVIOR
+License
+Distributed under the MIT License. See LICENSE for more information.
 
-- The assistant answers questions about the user's inventory like "What should I reorder this week?", "Which items are tying up the most money?", "What's out of stock?", "Which items haven't moved in 60 days?", "How much is stored in each location?", "Summarize my inventory in a few lines."
-
-- On each message, send the AI a compact summary of the data: item counts, value by category and location, low and out-of-stock items with their reorder levels, recent stock movements (including usage rate), and slow-moving items.
-
-- It identifies and explains issues: items likely to run out soon based on recent usage, overstocked items, items with unusual quantity changes, duplicate-looking entries, and missing data such as no price or location. It suggests reorder quantities and explains its reasoning using the data.
-
-- It can draft a reorder list or a supplier message the user can copy.
-
-- It only uses the data provided, never invents numbers, and says so when there isn't enough history to make a prediction. Answers are concise and practical.
-
-- Include starter questions, markdown rendering, streaming responses, a "Clear chat" button and a typing indicator.
-
-- Add quick actions such as "Restock these items" or "Update reorder levels", applied only after the user confirms.
-
-IMPLEMENTATION
-
-- Use Lovable Cloud with an edge function to call the AI model so no API key is exposed in the browser. Handle errors and rate limits gracefully.
-
-This project was built with [Lovable](https://lovable.dev).
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/4a639243-c046-44fd-bba5-d224170f06be).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
+Contact: royfrank028@gmail.com
