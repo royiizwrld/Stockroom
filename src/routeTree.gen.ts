@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as SignupRouteImport } from './routes/signup'
@@ -24,6 +25,10 @@ import { Route as AuthenticatedItemsIdRouteImport } from './routes/_authenticate
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -47,19 +52,19 @@ const TermsRoute = TermsRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedBulkRoute = AuthenticatedBulkRouteImport.update({
-  id: '/_authenticated/bulk',
+  id: '/bulk',
   path: '/bulk',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
-  id: '/_authenticated/dashboard',
+  id: '/dashboard',
   path: '/dashboard',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedReorderRoute = AuthenticatedReorderRouteImport.update({
-  id: '/_authenticated/reorder',
+  id: '/reorder',
   path: '/reorder',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const ApiChatRoute = ApiChatRouteImport.update({
   id: '/api/chat',
@@ -67,14 +72,14 @@ const ApiChatRoute = ApiChatRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedItemsIndexRoute = AuthenticatedItemsIndexRouteImport.update({
-  id: '/_authenticated/items/',
+  id: '/items/',
   path: '/items/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedItemsIdRoute = AuthenticatedItemsIdRouteImport.update({
-  id: '/_authenticated/items/$id',
+  id: '/items/$id',
   path: '/items/$id',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -106,6 +111,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
   '/signup': typeof SignupRoute
@@ -147,6 +153,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/login'
     | '/privacy'
     | '/signup'
@@ -161,16 +168,12 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   LoginRoute: typeof LoginRoute
   PrivacyRoute: typeof PrivacyRoute
   SignupRoute: typeof SignupRoute
   TermsRoute: typeof TermsRoute
-  AuthenticatedBulkRoute: typeof AuthenticatedBulkRoute
-  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
-  AuthenticatedReorderRoute: typeof AuthenticatedReorderRoute
   ApiChatRoute: typeof ApiChatRoute
-  AuthenticatedItemsIdRoute: typeof AuthenticatedItemsIdRoute
-  AuthenticatedItemsIndexRoute: typeof AuthenticatedItemsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -180,6 +183,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -215,21 +225,21 @@ declare module '@tanstack/react-router' {
       path: '/bulk'
       fullPath: '/bulk'
       preLoaderRoute: typeof AuthenticatedBulkRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/reorder': {
       id: '/_authenticated/reorder'
       path: '/reorder'
       fullPath: '/reorder'
       preLoaderRoute: typeof AuthenticatedReorderRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/api/chat': {
       id: '/api/chat'
@@ -243,30 +253,45 @@ declare module '@tanstack/react-router' {
       path: '/items'
       fullPath: '/items/'
       preLoaderRoute: typeof AuthenticatedItemsIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/items/$id': {
       id: '/_authenticated/items/$id'
       path: '/items/$id'
       fullPath: '/items/$id'
       preLoaderRoute: typeof AuthenticatedItemsIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedBulkRoute: typeof AuthenticatedBulkRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedReorderRoute: typeof AuthenticatedReorderRoute
+  AuthenticatedItemsIdRoute: typeof AuthenticatedItemsIdRoute
+  AuthenticatedItemsIndexRoute: typeof AuthenticatedItemsIndexRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedBulkRoute: AuthenticatedBulkRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedReorderRoute: AuthenticatedReorderRoute,
+  AuthenticatedItemsIdRoute: AuthenticatedItemsIdRoute,
+  AuthenticatedItemsIndexRoute: AuthenticatedItemsIndexRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   LoginRoute: LoginRoute,
   PrivacyRoute: PrivacyRoute,
   SignupRoute: SignupRoute,
   TermsRoute: TermsRoute,
-  AuthenticatedBulkRoute: AuthenticatedBulkRoute,
-  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
-  AuthenticatedReorderRoute: AuthenticatedReorderRoute,
   ApiChatRoute: ApiChatRoute,
-  AuthenticatedItemsIdRoute: AuthenticatedItemsIdRoute,
-  AuthenticatedItemsIndexRoute: AuthenticatedItemsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

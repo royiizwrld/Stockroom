@@ -1,7 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { SimplePage } from "@/components/layout/SimplePage";
+import { createFileRoute } from "@tanstack/react-router";
+import { AuthForm } from "@/components/auth/AuthForm";
 
 export const Route = createFileRoute("/login")({
+  validateSearch: (s: Record<string, unknown>): { redirect?: string | undefined } => ({
+    redirect: typeof s.redirect === "string" ? s.redirect : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Sign in — Stockroom" },
@@ -12,9 +15,5 @@ export const Route = createFileRoute("/login")({
       { name: "twitter:card", content: "summary" },
     ],
   }),
-  component: () => (
-    <SimplePage title="Sign in">
-      <p>Accounts are being set up and will be available shortly.</p><p><Link to="/dashboard" className="text-primary underline">Open the app on this device</Link></p>
-    </SimplePage>
-  ),
+  component: () => <AuthForm mode="login" redirect={Route.useSearch().redirect} />,
 });
