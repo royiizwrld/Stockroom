@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { Boxes } from "lucide-react";
 import { useAppearance } from "./SettingsDialog";
 
-const PUBLIC = ["/", "/login", "/signup", "/terms", "/privacy"];
+const PUBLIC = ["/", "/login", "/signup", "/forgot-password", "/reset-password", "/terms", "/privacy"];
 export const isPublicPath = (p: string) => PUBLIC.includes(p.replace(/\/$/, "") || "/");
 
 export function Logo() {
