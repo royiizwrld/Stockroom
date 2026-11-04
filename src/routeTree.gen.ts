@@ -10,30 +10,32 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as BulkRouteImport } from './routes/bulk'
-import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as ReorderRouteImport } from './routes/reorder'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as AuthenticatedBulkRouteImport } from './routes/_authenticated/bulk'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedReorderRouteImport } from './routes/_authenticated/reorder'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
-import { Route as ItemsIndexRouteImport } from './routes/items.index'
-import { Route as ItemsIdRouteImport } from './routes/items.$id'
+import { Route as AuthenticatedItemsIndexRouteImport } from './routes/_authenticated/items.index'
+import { Route as AuthenticatedItemsIdRouteImport } from './routes/_authenticated/items.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BulkRoute = BulkRouteImport.update({
-  id: '/bulk',
-  path: '/bulk',
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -46,9 +48,9 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ReorderRoute = ReorderRouteImport.update({
-  id: '/reorder',
-  path: '/reorder',
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SignupRoute = SignupRouteImport.update({
@@ -61,116 +63,143 @@ const TermsRoute = TermsRouteImport.update({
   path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedBulkRoute = AuthenticatedBulkRouteImport.update({
+  id: '/bulk',
+  path: '/bulk',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedReorderRoute = AuthenticatedReorderRouteImport.update({
+  id: '/reorder',
+  path: '/reorder',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const ApiChatRoute = ApiChatRouteImport.update({
   id: '/api/chat',
   path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ItemsIndexRoute = ItemsIndexRouteImport.update({
+const AuthenticatedItemsIndexRoute = AuthenticatedItemsIndexRouteImport.update({
   id: '/items/',
   path: '/items/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const ItemsIdRoute = ItemsIdRouteImport.update({
+const AuthenticatedItemsIdRoute = AuthenticatedItemsIdRouteImport.update({
   id: '/items/$id',
   path: '/items/$id',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/bulk': typeof BulkRoute
-  '/dashboard': typeof DashboardRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
-  '/reorder': typeof ReorderRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
+  '/bulk': typeof AuthenticatedBulkRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/reorder': typeof AuthenticatedReorderRoute
   '/api/chat': typeof ApiChatRoute
-  '/items/$id': typeof ItemsIdRoute
-  '/items/': typeof ItemsIndexRoute
+  '/items/$id': typeof AuthenticatedItemsIdRoute
+  '/items/': typeof AuthenticatedItemsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/bulk': typeof BulkRoute
-  '/dashboard': typeof DashboardRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
-  '/reorder': typeof ReorderRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
+  '/bulk': typeof AuthenticatedBulkRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/reorder': typeof AuthenticatedReorderRoute
   '/api/chat': typeof ApiChatRoute
-  '/items/$id': typeof ItemsIdRoute
-  '/items': typeof ItemsIndexRoute
+  '/items/$id': typeof AuthenticatedItemsIdRoute
+  '/items': typeof AuthenticatedItemsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/bulk': typeof BulkRoute
-  '/dashboard': typeof DashboardRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/privacy': typeof PrivacyRoute
-  '/reorder': typeof ReorderRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
   '/terms': typeof TermsRoute
+  '/_authenticated/bulk': typeof AuthenticatedBulkRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/reorder': typeof AuthenticatedReorderRoute
   '/api/chat': typeof ApiChatRoute
-  '/items/$id': typeof ItemsIdRoute
-  '/items/': typeof ItemsIndexRoute
+  '/_authenticated/items/$id': typeof AuthenticatedItemsIdRoute
+  '/_authenticated/items/': typeof AuthenticatedItemsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/bulk'
-    | '/dashboard'
+    | '/forgot-password'
     | '/login'
     | '/privacy'
-    | '/reorder'
+    | '/reset-password'
     | '/signup'
     | '/terms'
+    | '/bulk'
+    | '/dashboard'
+    | '/reorder'
     | '/api/chat'
     | '/items/$id'
     | '/items/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/bulk'
-    | '/dashboard'
+    | '/forgot-password'
     | '/login'
     | '/privacy'
-    | '/reorder'
+    | '/reset-password'
     | '/signup'
     | '/terms'
+    | '/bulk'
+    | '/dashboard'
+    | '/reorder'
     | '/api/chat'
     | '/items/$id'
     | '/items'
   id:
     | '__root__'
     | '/'
-    | '/bulk'
-    | '/dashboard'
+    | '/_authenticated'
+    | '/forgot-password'
     | '/login'
     | '/privacy'
-    | '/reorder'
+    | '/reset-password'
     | '/signup'
     | '/terms'
+    | '/_authenticated/bulk'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/reorder'
     | '/api/chat'
-    | '/items/$id'
-    | '/items/'
+    | '/_authenticated/items/$id'
+    | '/_authenticated/items/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  BulkRoute: typeof BulkRoute
-  DashboardRoute: typeof DashboardRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
   PrivacyRoute: typeof PrivacyRoute
-  ReorderRoute: typeof ReorderRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SignupRoute: typeof SignupRoute
   TermsRoute: typeof TermsRoute
   ApiChatRoute: typeof ApiChatRoute
-  ItemsIdRoute: typeof ItemsIdRoute
-  ItemsIndexRoute: typeof ItemsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -182,18 +211,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/bulk': {
-      id: '/bulk'
-      path: '/bulk'
-      fullPath: '/bulk'
-      preLoaderRoute: typeof BulkRouteImport
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -210,11 +239,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/reorder': {
-      id: '/reorder'
-      path: '/reorder'
-      fullPath: '/reorder'
-      preLoaderRoute: typeof ReorderRouteImport
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/signup': {
@@ -231,6 +260,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/bulk': {
+      id: '/_authenticated/bulk'
+      path: '/bulk'
+      fullPath: '/bulk'
+      preLoaderRoute: typeof AuthenticatedBulkRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reorder': {
+      id: '/_authenticated/reorder'
+      path: '/reorder'
+      fullPath: '/reorder'
+      preLoaderRoute: typeof AuthenticatedReorderRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/api/chat': {
       id: '/api/chat'
       path: '/api/chat'
@@ -238,35 +288,52 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/items/': {
-      id: '/items/'
+    '/_authenticated/items/': {
+      id: '/_authenticated/items/'
       path: '/items'
       fullPath: '/items/'
-      preLoaderRoute: typeof ItemsIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedItemsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/items/$id': {
-      id: '/items/$id'
+    '/_authenticated/items/$id': {
+      id: '/_authenticated/items/$id'
       path: '/items/$id'
       fullPath: '/items/$id'
-      preLoaderRoute: typeof ItemsIdRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedItemsIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedBulkRoute: typeof AuthenticatedBulkRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedReorderRoute: typeof AuthenticatedReorderRoute
+  AuthenticatedItemsIdRoute: typeof AuthenticatedItemsIdRoute
+  AuthenticatedItemsIndexRoute: typeof AuthenticatedItemsIndexRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedBulkRoute: AuthenticatedBulkRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedReorderRoute: AuthenticatedReorderRoute,
+  AuthenticatedItemsIdRoute: AuthenticatedItemsIdRoute,
+  AuthenticatedItemsIndexRoute: AuthenticatedItemsIndexRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  BulkRoute: BulkRoute,
-  DashboardRoute: DashboardRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
   PrivacyRoute: PrivacyRoute,
-  ReorderRoute: ReorderRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SignupRoute: SignupRoute,
   TermsRoute: TermsRoute,
   ApiChatRoute: ApiChatRoute,
-  ItemsIdRoute: ItemsIdRoute,
-  ItemsIndexRoute: ItemsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

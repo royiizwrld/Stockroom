@@ -1,6 +1,8 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
-import { Boxes, LayoutDashboard, Package, ScanLine, Settings, ShoppingCart, Wand2 } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/hooks/useAuth";
+import { LogOut, Boxes, LayoutDashboard, Package, ScanLine, Settings, ShoppingCart, Wand2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AssistantPanel } from "@/components/assistant/AssistantPanel";
 import { ScanDialog } from "@/components/inventory/ScanDialog";
@@ -13,6 +15,26 @@ const NAV = [
   { to: "/bulk", label: "Smart Bulk Entry", short: "Bulk Entry", icon: Wand2 },
   { to: "/reorder", label: "Supplier order", short: "Order", icon: ShoppingCart },
 ] as const;
+
+function AccountMenu() {
+  const { user, signOut } = useAuth();
+  if (!user) return null;
+  const label = (user.user_metadata?.["display_name"] as string | undefined) || user.email || "Account";
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon" aria-label="Account" title={label}>
+          <span className="grid h-7 w-7 place-items-center rounded-full bg-primary text-xs font-semibold uppercase text-primary-foreground">{label.charAt(0)}</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel className="max-w-56 truncate font-normal text-muted-foreground">{user.email}</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onSelect={() => void signOut()}><LogOut className="mr-2 h-4 w-4" />Sign out</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
 
 export function AppShell({ children }: { children: ReactNode }) {
   const [scanOpen, setScanOpen] = useState(false);
@@ -40,6 +62,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <div className="ml-auto flex shrink-0 items-center">
             <Button variant="ghost" size="icon" aria-label="Scan barcode or QR code" title="Scan barcode or QR code" onClick={() => setScanOpen(true)}><ScanLine className="h-4 w-4" /></Button>
             <Button variant="ghost" size="icon" aria-label="Settings" title="Settings" onClick={() => setSettingsOpen(true)}><Settings className="h-4 w-4" /></Button>
+            <AccountMenu />
           </div>
         </div>
       </header>

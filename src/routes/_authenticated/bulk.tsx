@@ -13,7 +13,7 @@ import { extractItems } from "@/lib/ai.functions";
 import { DEFAULT_REORDER_LEVEL, findMatch, generateSku } from "@/lib/inventory";
 import type { ItemType } from "@/lib/types";
 
-export const Route = createFileRoute("/bulk")({
+export const Route = createFileRoute("/_authenticated/bulk")({
   head: () => ({
     meta: [
       { title: "Smart Bulk Entry — Stockroom Inventory Logger" },

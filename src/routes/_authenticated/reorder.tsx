@@ -15,7 +15,7 @@ import { orderTotals, reorderLines, type OrderLine } from "@/lib/asset-planning"
 import { formatCurrency, getCurrency } from "@/lib/currency";
 import { purchaseOrderPdf, printPdf, type SupplierInfo } from "@/lib/inventory-documents";
 
-export const Route = createFileRoute("/reorder")({
+export const Route = createFileRoute("/_authenticated/reorder")({
   head: () => ({
     meta: [
       { title: "Supplier Order — Stockroom Inventory Logger" },

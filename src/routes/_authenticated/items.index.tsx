@@ -19,7 +19,7 @@ import { useInventory } from "@/context/InventoryContext";
 import { formatMoney, getStatus, itemValue, itemsToCsv, matchesSearch, STATUS_LABEL } from "@/lib/inventory";
 import type { Item, StockStatus } from "@/lib/types";
 
-export const Route = createFileRoute("/items/")({
+export const Route = createFileRoute("/_authenticated/items/")({
   head: () => ({
     meta: [
       { title: "Items — Stockroom Inventory Logger" },

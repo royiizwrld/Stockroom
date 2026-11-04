@@ -10,6 +10,7 @@ import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/s
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { StatusBadge } from "@/components/inventory/StatusBadge";
 import { Logo, SiteFooter } from "@/components/layout/PublicShell";
+import { useAuth } from "@/hooks/useAuth";
 
 const TITLE = "Stockroom — Simple inventory & asset tracking for shops and offices";
 const DESC = "Keep stock and assets organized: low-stock alerts, AI bulk entry, barcode and QR scanning, movement history and shared team workspaces.";
@@ -74,10 +75,11 @@ const SAMPLE = [
 function Landing() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const { user, loading } = useAuth();
   useEffect(() => {
-    // The installed app opens straight into the dashboard.
-    if (window.matchMedia("(display-mode: standalone)").matches) navigate({ to: "/dashboard", replace: true });
-  }, [navigate]);
+    // Signed-in visitors and the installed app open straight into the dashboard.
+    if ((!loading && user) || window.matchMedia("(display-mode: standalone)").matches) navigate({ to: "/dashboard", replace: true });
+  }, [navigate, user, loading]);
 
   return (
     <>
