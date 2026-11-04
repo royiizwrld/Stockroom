@@ -1,4 +1,5 @@
 #📦Stockroom
+
 Stockroom is a modern, feature-rich inventory and asset tracking web application built for shops, offices, and personal use. It helps you keep track of what you have, where items are located, and when it’s time to reorder—complete with AI-powered assistance, multi-currency support, smart supplier purchase orders, and team collaboration features.
 
 Key Features
