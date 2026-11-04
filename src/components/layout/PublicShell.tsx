@@ -28,7 +28,7 @@ export function SiteFooter() {
         <nav aria-label="Legal" className="flex flex-wrap gap-4">
           <Link to="/terms" className="hover:text-foreground">Terms</Link>
           <Link to="/privacy" className="hover:text-foreground">Privacy</Link>
-          <a href="mailto:hello@example.com" className="hover:text-foreground">hello@example.com</a>
+          <a href="mailto:royfrank028@gmail.com" className="hover:text-foreground">royfrank028@gmail.com</a>
         </nav>
         <p>© {new Date().getFullYear()} Stockroom</p>
       </div>
