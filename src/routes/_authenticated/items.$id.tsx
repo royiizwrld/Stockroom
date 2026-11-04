@@ -16,7 +16,7 @@ import { suggestedReorder } from "@/lib/asset-planning";
 import { LabelButton } from "@/components/inventory/PlanningActions";
 import { WarrantyAlerts } from "@/components/inventory/WarrantyAlerts";
 
-export const Route = createFileRoute("/items/$id")({
+export const Route = createFileRoute("/_authenticated/items/$id")({
   head: () => ({
     meta: [
       { title: "Item details — Stockroom Inventory Logger" },
