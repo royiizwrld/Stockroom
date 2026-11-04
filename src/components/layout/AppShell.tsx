@@ -19,7 +19,7 @@ const NAV = [
 function AccountMenu() {
   const { user, signOut } = useAuth();
   if (!user) return null;
-  const label = (user.user_metadata?.display_name as string | undefined) || user.email || "Account";
+  const label = (user.user_metadata?.["display_name"] as string | undefined) || user.email || "Account";
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
