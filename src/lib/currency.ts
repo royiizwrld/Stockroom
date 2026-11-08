@@ -35,6 +35,16 @@ export function subscribeCurrency(l: () => void) {
   return () => { listeners.delete(l); };
 }
 
+let pricesHidden = false;
+export const arePricesHidden = () => pricesHidden;
+/** Masks every formatted amount, e.g. when the workspace hides prices from this member. */
+export function setPricesHidden(v: boolean) {
+  if (v === pricesHidden) return;
+  pricesHidden = v;
+  listeners.forEach((l) => l());
+}
+
 export function formatCurrency(n: number, code: string = current) {
+  if (pricesHidden) return "Hidden";
   return new Intl.NumberFormat(undefined, { style: "currency", currency: code, maximumFractionDigits: 2, minimumFractionDigits: 0 }).format(n);
 }

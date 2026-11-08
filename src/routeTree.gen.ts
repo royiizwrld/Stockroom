@@ -20,6 +20,7 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AuthenticatedBulkRouteImport } from './routes/_authenticated/bulk'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedReorderRouteImport } from './routes/_authenticated/reorder'
+import { Route as AuthenticatedTeamRouteImport } from './routes/_authenticated/team'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AuthenticatedItemsIndexRouteImport } from './routes/_authenticated/items.index'
 import { Route as AuthenticatedItemsIdRouteImport } from './routes/_authenticated/items.$id'
@@ -78,6 +79,11 @@ const AuthenticatedReorderRoute = AuthenticatedReorderRouteImport.update({
   path: '/reorder',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedTeamRoute = AuthenticatedTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const ApiChatRoute = ApiChatRouteImport.update({
   id: '/api/chat',
   path: '/api/chat',
@@ -105,6 +111,7 @@ export interface FileRoutesByFullPath {
   '/bulk': typeof AuthenticatedBulkRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/reorder': typeof AuthenticatedReorderRoute
+  '/team': typeof AuthenticatedTeamRoute
   '/api/chat': typeof ApiChatRoute
   '/items/$id': typeof AuthenticatedItemsIdRoute
   '/items/': typeof AuthenticatedItemsIndexRoute
@@ -120,6 +127,7 @@ export interface FileRoutesByTo {
   '/bulk': typeof AuthenticatedBulkRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/reorder': typeof AuthenticatedReorderRoute
+  '/team': typeof AuthenticatedTeamRoute
   '/api/chat': typeof ApiChatRoute
   '/items/$id': typeof AuthenticatedItemsIdRoute
   '/items': typeof AuthenticatedItemsIndexRoute
@@ -137,6 +145,7 @@ export interface FileRoutesById {
   '/_authenticated/bulk': typeof AuthenticatedBulkRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/reorder': typeof AuthenticatedReorderRoute
+  '/_authenticated/team': typeof AuthenticatedTeamRoute
   '/api/chat': typeof ApiChatRoute
   '/_authenticated/items/$id': typeof AuthenticatedItemsIdRoute
   '/_authenticated/items/': typeof AuthenticatedItemsIndexRoute
@@ -154,6 +163,7 @@ export interface FileRouteTypes {
     | '/bulk'
     | '/dashboard'
     | '/reorder'
+    | '/team'
     | '/api/chat'
     | '/items/$id'
     | '/items/'
@@ -169,6 +179,7 @@ export interface FileRouteTypes {
     | '/bulk'
     | '/dashboard'
     | '/reorder'
+    | '/team'
     | '/api/chat'
     | '/items/$id'
     | '/items'
@@ -185,6 +196,7 @@ export interface FileRouteTypes {
     | '/_authenticated/bulk'
     | '/_authenticated/dashboard'
     | '/_authenticated/reorder'
+    | '/_authenticated/team'
     | '/api/chat'
     | '/_authenticated/items/$id'
     | '/_authenticated/items/'
@@ -281,6 +293,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedReorderRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/team': {
+      id: '/_authenticated/team'
+      path: '/team'
+      fullPath: '/team'
+      preLoaderRoute: typeof AuthenticatedTeamRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/api/chat': {
       id: '/api/chat'
       path: '/api/chat'
@@ -309,6 +328,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedBulkRoute: typeof AuthenticatedBulkRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedReorderRoute: typeof AuthenticatedReorderRoute
+  AuthenticatedTeamRoute: typeof AuthenticatedTeamRoute
   AuthenticatedItemsIdRoute: typeof AuthenticatedItemsIdRoute
   AuthenticatedItemsIndexRoute: typeof AuthenticatedItemsIndexRoute
 }
@@ -317,6 +337,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedBulkRoute: AuthenticatedBulkRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedReorderRoute: AuthenticatedReorderRoute,
+  AuthenticatedTeamRoute: AuthenticatedTeamRoute,
   AuthenticatedItemsIdRoute: AuthenticatedItemsIdRoute,
   AuthenticatedItemsIndexRoute: AuthenticatedItemsIndexRoute,
 }

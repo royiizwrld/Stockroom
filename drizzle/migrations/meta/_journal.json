@@ -8,6 +8,13 @@
       "when": 1793805326950,
       "tag": "0000_create_profiles",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794165967225,
+      "tag": "0001_team_workspaces_and_sync",
+      "breakpoints": true
     }
   ]
 }
