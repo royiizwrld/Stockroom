@@ -76,8 +76,8 @@ function TeamPage() {
   const invite = async (e: React.FormEvent) => {
     e.preventDefault();
     const em = email.trim().toLowerCase();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) return toast.error("Enter a valid email address");
-    if (members.some((m) => m.email?.toLowerCase() === em)) return toast.error("That person is already a member");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { toast.error("Enter a valid email address"); return; }
+    if (members.some((m) => m.email?.toLowerCase() === em)) { toast.error("That person is already a member"); return; }
     await run(supabase.from("workspace_invites").insert({ workspace_id: current.id, email: em, role, invited_by: user!.id }), `Invite saved for ${em}`);
     setEmail("");
   };
