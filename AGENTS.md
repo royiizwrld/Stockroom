@@ -10,7 +10,9 @@
 <!-- LOVABLE:END -->
 
 ## Architecture
-- All inventory data lives in localStorage via `src/context/InventoryContext.tsx`; status/summary logic is pure in `src/lib/inventory.ts` — keeps storage swappable and logic testable.
+- Inventory is one JSON document per workspace in the cloud, loaded/saved (debounced, polled on focus) by `InventoryContext.tsx`; status/summary logic stays pure in `src/lib/inventory.ts` — keeps existing features unchanged while sharing data across a team.
+- Workspace membership/roles come from `useWorkspace`; role rules are pure in `src/lib/workspace-roles.ts` and enforced again by database policies — UI checks are convenience, policies are the guard.
+- Installable app is manifest-only (no service worker) — avoids stale-cache issues in previews.
 - AI calls run only server-side: extraction in `src/lib/ai.functions.ts` (server fn), streaming chat in `src/routes/api/chat.ts` — keeps the key out of the browser.
 - Assistant suggested changes come as a fenced `actions` JSON block and are applied only after user confirmation.
 - Camera decoding uses a dynamically imported ZXing reader in an effect, with explicit stream cleanup — keeps browser camera access out of SSR and releases the camera when scanning ends.

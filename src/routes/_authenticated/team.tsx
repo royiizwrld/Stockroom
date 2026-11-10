@@ -76,8 +76,8 @@ function TeamPage() {
   const invite = async (e: React.FormEvent) => {
     e.preventDefault();
     const em = email.trim().toLowerCase();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) return toast.error("Enter a valid email address");
-    if (members.some((m) => m.email?.toLowerCase() === em)) return toast.error("That person is already a member");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { toast.error("Enter a valid email address"); return; }
+    if (members.some((m) => m.email?.toLowerCase() === em)) { toast.error("That person is already a member"); return; }
     await run(supabase.from("workspace_invites").insert({ workspace_id: current.id, email: em, role, invited_by: user!.id }), `Invite saved for ${em}`);
     setEmail("");
   };
@@ -88,7 +88,7 @@ function TeamPage() {
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Team & workspace" description="Everyone in a workspace shares the same inventory, synced to the cloud." />
+      <PageHeader title="Team & workspace" subtitle="Everyone in a workspace shares the same inventory, synced to the cloud." />
 
       <Card>
         <CardHeader><CardTitle className="flex items-center gap-2 text-base"><Building2 className="h-4 w-4" />Workspace</CardTitle>

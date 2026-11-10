@@ -15,6 +15,7 @@ interface Ctx {
   reload: () => Promise<void>;
   createWorkspace: (name: string) => Promise<void>;
 }
+const FALLBACK: Ctx = { workspaces: [], current: null, loading: true, error: null, switchTo: () => {}, reload: async () => {}, createWorkspace: async () => {} };
 const WorkspaceContext = createContext<Ctx | null>(null);
 const CURRENT_KEY = "stockroom:workspace";
 const LEGACY_KEY = "inventory-logger:v1";
@@ -82,6 +83,6 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
 
 export function useWorkspace() {
   const ctx = useContext(WorkspaceContext);
-  if (!ctx) throw new Error("useWorkspace must be used inside WorkspaceProvider");
-  return ctx;
+  // Fallback keeps the page rendering (empty, loading) if a hot update briefly remounts providers out of order.
+  return ctx ?? FALLBACK;
 }
