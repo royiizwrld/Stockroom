@@ -14,6 +14,6 @@
 # Accounts, teams, sync & PWA
 - [x] Part 1: public landing page at /, dashboard at /dashboard, terms/privacy pages.
 - [x] Part 2: accounts (email, Google, Lovable sign-in, password reset), app pages require sign-in.
-- [ ] Part 3: shared workspaces, roles, invites, activity log, hide prices.
-- [ ] Part 4: cloud sync of inventory.
-- [ ] Part 5: installable PWA.
+- [x] Part 3: shared workspaces, roles, invites, activity log, hide prices.
+- [x] Part 4: cloud sync of inventory.
+- [x] Part 5: installable PWA.

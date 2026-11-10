@@ -18,6 +18,7 @@ import { AppShell } from "@/components/layout/AppShell";
 import { PublicShell, isPublicPath } from "@/components/layout/PublicShell";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/hooks/useAuth";
+import { WorkspaceProvider } from "@/hooks/useWorkspace";
 
 function NotFoundComponent() {
   return (
@@ -99,6 +100,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "Track inventory, assets and stock movements with AI help." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "theme-color", content: "#1f6f5c" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
@@ -107,6 +110,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "manifest", href: "/manifest.webmanifest" },
+      { rel: "apple-touch-icon", href: "/icon-192.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" },
@@ -151,7 +156,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <AuthProvider><InventoryProvider>
+      <AuthProvider><WorkspaceProvider><InventoryProvider>
         {isPublicPath(pathname) ? (
           <PublicShell><Outlet /></PublicShell>
         ) : (
@@ -160,7 +165,7 @@ function RootComponent() {
           </AppShell>
         )}
         <Toaster richColors position="bottom-left" />
-      </InventoryProvider></AuthProvider>
+      </InventoryProvider></WorkspaceProvider></AuthProvider>
     </QueryClientProvider>
   );
 }

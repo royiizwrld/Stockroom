@@ -88,7 +88,7 @@ function TeamPage() {
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Team & workspace" description="Everyone in a workspace shares the same inventory, synced to the cloud." />
+      <PageHeader title="Team & workspace" subtitle="Everyone in a workspace shares the same inventory, synced to the cloud." />
 
       <Card>
         <CardHeader><CardTitle className="flex items-center gap-2 text-base"><Building2 className="h-4 w-4" />Workspace</CardTitle>
