@@ -90,7 +90,7 @@ export function InventoryProvider({ children }: { children: ReactNode }) {
   const logActivity = useCallback((action: string, details?: string) => {
     if (!wsId || !user) return;
     const actor = (user.user_metadata?.["display_name"] as string | undefined) || user.email || "Someone";
-    void supabase.from("activity_log").insert({ workspace_id: wsId, user_id: user.id, actor_name: actor, action, details: details ?? null });
+    void supabase.from("activity_log").insert({ workspace_id: wsId, user_id: user.id, actor_name: actor, action, details: details ?? null }).then(({ error }) => { if (error) console.warn("Activity log:", error.message); });
   }, [wsId, user]);
 
   /** Applies a local change if this member may edit; marks it for cloud save. */
